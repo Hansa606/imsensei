@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style>
 :root {
   --bg: #f8fafc;
@@ -177,118 +184,58 @@ footer {
   margin-top: 30px;
   text-align: center;
 }
-
-/* === Ultra Mobile Large UI Fix === */
+/* ===== Adjusted Mobile — slightly smaller (use this to reduce 'too big' feeling) ===== */
 @media (max-width: 640px) {
+  body { padding: 10px; background: #f9fafb; }
 
-  body {
-    padding: 14px;
-    background: #f9fafb;
-  }
+  h1 { font-size: 1.25rem; } /* smaller header */
 
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
+  .card { padding: 16px 12px; border-radius: 12px; margin-bottom: 18px; }
+  .card h2 { font-size: 1.2rem; border-left-width: 4px; padding-left: 8px; }
 
-  h1 {
-    font-size: 1.6rem;
-  }
-
-  .controls button {
-    font-size: 1.1rem;
-    padding: 10px 16px;
-    border-radius: 10px;
-  }
-
-  .card {
-    padding: 22px 18px;
-    border-radius: 16px;
-    margin-bottom: 24px;
-  }
-
-  .card h2 {
-    font-size: 1.5rem;
-    border-left: 6px solid var(--accent);
-    padding-left: 10px;
-    margin-bottom: 16px;
-  }
-
-  /* Sentences */
   .sentence,
   .list-item.sentence {
     flex-direction: column;
     align-items: flex-start;
-    justify-content: flex-start;
     text-align: left;
-    padding: 20px;
-    border-radius: 16px;
-    margin-bottom: 16px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #e6eef8;
   }
 
   .jp {
-    font-size: 1.8rem;   /* Japanese big */
+    font-size: 1.25rem;   /* reduce from 1.8rem to 1.25rem */
     font-weight: 700;
-    line-height: 1.5;
+    line-height: 1.35;
     margin-bottom: 6px;
   }
 
-  .romaji {
-    font-size: 1.3rem;
-    color: #475569;
-  }
-
-  .sinhala {
-    font-size: 1.3rem;
-    color: #374151;
-    margin-top: 6px;
-  }
+  .romaji { font-size: 1rem; }
+  .sinhala { font-size: 1rem; margin-top: 6px; }
 
   .actions {
-    margin-top: 10px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 14px;
+    margin-top: 8px;
+    gap: 10px;
   }
 
   .actions button {
-    padding: 14px 18px;
-    font-size: 1.3rem;
-    border-radius: 14px;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    justify-content: center;
+    padding: 10px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    width: 48px;
+    height: 48px; /* smaller than 56 */
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
   }
 
-  .actions button::before {
-    font-size: 1.6rem;
-  }
+  .grid { display: flex; flex-direction: column; gap: 12px; }
 
-  .start-asr {
-    background: var(--accent);
-    color: white;
-  }
-
-  .grid {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  footer {
-    font-size: 1.1rem;
-    margin-top: 40px;
-  }
+  footer { font-size: 0.95rem; margin-top: 22px; }
 }
 
 </style>
-
-
 
 </head>
 <body>
