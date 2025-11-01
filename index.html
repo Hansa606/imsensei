@@ -1,142 +1,48 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Iradori Practice Lesson — Interactive HTML (Mic & ASR)</title>
-    <style>
+<style>
         :root {
             --bg: #f7fafc;
             --card: #ffffff;
             --accent: #2b6cb0;
-            --muted: #6b7280
+            --muted: #6b7280;
         }
-
         body {
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
             background: var(--bg);
             color: #0f172a;
-            padding: 20px
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto
-        }
-
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 18px
-        }
-
-        h1 {
-            font-size: 20px;
-            margin: 0
-        }
-
-        .card {
-            background: var(--card);
-            border-radius: 12px;
             padding: 18px;
-            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
-            margin-bottom: 12px
         }
-
-        .controls button {
-            margin-right: 8px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid #e6eef8;
-            background: white;
-            cursor: pointer
-        }
-
-        .sentence {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px dashed #eef2f7
-        }
-
-        .text {
-            flex: 1
-        }
-
-        .jp {
-            font-size: 18px;
-            font-weight: 600
-        }
-
-        .romaji,
-        .sinhala {
-            font-size: 14px;
-            color: var(--muted);
-            margin-top: 6px
-        }
-
-        .small {
-            font-size: 13px;
-            color: var(--muted)
-        }
-
-        .actions button {
-            margin-left: 8px
-        }
-
-        .hidden {
-            display: none
-        }
-
-        footer {
-            margin-top: 18px;
-            font-size: 13px;
-            color: var(--muted)
-        }
-
-        .exercise .choice {
-            display: inline-block;
-            margin: 6px 8px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid #e6eef8;
-            background: #fff;
-            cursor: pointer
-        }
-
-        .exercise .choice.selected {
-            border-color: var(--accent);
-            background: linear-gradient(90deg, #e6f2ff, white)
-        }
-
-        .asr-result {
-            margin-top: 8px;
-            font-weight: 600
-        }
-
-        .asr-correct {
-            color: green
-        }
-
-        .asr-wrong {
-            color: #b91c1c
-        }
-
-        .mic-status {
-            font-size: 13px;
-            color: var(--muted);
-            margin-left: 8px
+        .container { max-width: 1100px; margin: 0 auto; }
+        header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+        h1 { font-size:20px; margin:0; }
+        .controls button { margin-right:8px; padding:8px 12px; border-radius:8px; border:1px solid #e6eef8; background:white; cursor:pointer; }
+        .card { background:var(--card); border-radius:12px; padding:16px; box-shadow:0 6px 18px rgba(2,6,23,0.06); margin-bottom:12px; }
+        .sentence { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eef2f7; gap:12px; }
+        .text { flex:1; min-width:0; }
+        .jp { font-size:17px; font-weight:600; }
+        .romaji, .sinhala { font-size:14px; color:var(--muted); margin-top:6px; }
+        .small { font-size:13px; color:var(--muted); }
+        .actions { white-space:nowrap; }
+        .actions button { margin-left:8px; padding:6px 10px; border-radius:8px; border:1px solid #e6eef8; background:white; cursor:pointer; }
+        .hidden { display:none; }
+        footer { margin-top:18px; font-size:13px; color:var(--muted); }
+        .asr-result { margin-top:6px; font-weight:600; display:block; }
+        .asr-correct { color:green; }
+        .asr-wrong { color:#b91c1c; }
+        .mic-status { font-size:13px; color:var(--muted); margin-left:6px; display:inline-block; min-width:140px; }
+        .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:10px; }
+        .list-item { padding:10px; border-radius:8px; border:1px solid #eef4fb; background:#fff; }
+        pre.small-block { background:#f1f5f9; padding:8px; border-radius:6px; overflow-x:auto; }
+        @media (max-width:640px) {
+            .sentence { flex-direction:column; align-items:flex-start; }
+            .actions { width:100%; display:flex; justify-content:flex-start; gap:8px; margin-top:8px; }
+            .mic-status { min-width:0; }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <header>
-            <h1>Iradori Practice — Interactive Lesson (Mic & Speech Recognition)</h1>
+            <h1>Iradori Practice — All PDF Items (Mic & ASR)</h1>
             <div class="controls">
                 <button id="toggleRomaji">Toggle Romaji</button>
                 <button id="toggleSinhala">Toggle Sinhala</button>
@@ -144,14 +50,14 @@
             </div>
         </header>
 
+        <!-- GREETINGS -->
         <section class="card" id="phrases">
-            <h2 style="margin-top:0">Practice Phrases (Tap ▶ and then Start to speak)</h2>
+            <h2 style="margin-top:0">Greetings</h2>
 
-            <!-- sentence template -->
             <div class="sentence" data-index="1">
                 <div class="text">
                     <div class="jp">おはようございます。</div>
-                    <div class="romaji hidden">Ohayou gozaimasu.</div>
+                    <div class="romaji hidden">Ohayō gozaimasu.</div>
                     <div class="sinhala hidden">Subha udēsanak (සුභ උදේසනක්)</div>
                     <div class="asr-result" id="result-1"></div>
                 </div>
@@ -164,24 +70,22 @@
 
             <div class="sentence" data-index="2">
                 <div class="text">
-                    <div class="jp">どうも、ありがとうございます。</div>
-                    <div class="romaji hidden">Doumo, arigatou gozaimasu.</div>
-                    <div class="sinhala hidden">Bohoma sthuthi (බොහෝම ස්තුති)</div>
+                    <div class="jp">こんにちは。</div>
+                    <div class="romaji hidden">Konnichiwa.</div>
+                    <div class="sinhala hidden">Hello (හෙලෝ)</div>
                     <div class="asr-result" id="result-2"></div>
                 </div>
-                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span
-                        class="mic-status" id="mic-2"></span></div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-2"></span></div>
             </div>
 
             <div class="sentence" data-index="3">
                 <div class="text">
-                    <div class="jp">すみません、失礼します。</div>
-                    <div class="romaji hidden">Sumimasen, shitsurei shimasu.</div>
-                    <div class="sinhala hidden">Samā wenna, samāvendā (සමාවෙන්න, සුමාවෙන්)</div>
+                    <div class="jp">こんばんは。</div>
+                    <div class="romaji hidden">Konban wa.</div>
+                    <div class="sinhala hidden">Good evening (සුභ සන්ධ්‍යා)</div>
                     <div class="asr-result" id="result-3"></div>
                 </div>
-                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span
-                        class="mic-status" id="mic-3"></span></div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-3"></span></div>
             </div>
 
             <div class="sentence" data-index="4">
@@ -191,12 +95,385 @@
                     <div class="sinhala hidden">Subha nidā (සුභ නිදා)</div>
                     <div class="asr-result" id="result-4"></div>
                 </div>
-                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span
-                        class="mic-status" id="mic-4"></span></div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-4"></span></div>
             </div>
-
         </section>
 
+        <!-- THANKS / APOLOGY / POLITE PHRASES -->
+        <section class="card" id="polite">
+            <h2 style="margin-top:0">Polite phrases</h2>
+
+            <div class="sentence" data-index="5">
+                <div class="text">
+                    <div class="jp">どうも、ありがとうございます。</div>
+                    <div class="romaji hidden">Dōmo, arigatō gozaimasu.</div>
+                    <div class="sinhala hidden">Bohoma sthuthi (බොහෝම ස්තුති)</div>
+                    <div class="asr-result" id="result-5"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-5"></span></div>
+            </div>
+
+            <div class="sentence" data-index="6">
+                <div class="text">
+                    <div class="jp">すみません、失礼します。</div>
+                    <div class="romaji hidden">Sumimasen, shitsurei shimasu.</div>
+                    <div class="sinhala hidden">Samā wenna, samāvendā (සමාවෙන්න, සුමාවෙන්)</div>
+                    <div class="asr-result" id="result-6"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-6"></span></div>
+            </div>
+        </section>
+
+        <!-- INTRODUCTIONS / DIALOGUE -->
+        <section class="card" id="introductions">
+            <h2 style="margin-top:0">Introductions & Dialogue</h2>
+
+            <div class="sentence" data-index="10">
+                <div class="text">
+                    <div class="jp">A: こんにちは — Hello</div>
+                    <div class="romaji hidden">Konnichiwa — Hello</div>
+                    <div class="sinhala hidden">හෙලෝ</div>
+                    <div class="asr-result" id="result-10"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-10"></span></div>
+            </div>
+
+            <div class="sentence" data-index="11">
+                <div class="text">
+                    <div class="jp">A: 私はサチニです。</div>
+                    <div class="romaji hidden">Watashi wa Sachini desu.</div>
+                    <div class="sinhala hidden">Mama Sachini (මම සචිනි)</div>
+                    <div class="asr-result" id="result-11"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-11"></span></div>
+            </div>
+
+            <div class="sentence" data-index="12">
+                <div class="text">
+                    <div class="jp">B: 私はラダーです。どうぞよろしくお願いします。</div>
+                    <div class="romaji hidden">Watashi wa Radha desu. Dōzo yoroshiku onegaishimasu.</div>
+                    <div class="sinhala hidden">Mama Radha. Dōzo yoroshiku (මම රාධා)</div>
+                    <div class="asr-result" id="result-12"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-12"></span></div>
+            </div>
+
+            <div class="sentence" data-index="13">
+                <div class="text">
+                    <div class="jp">A: はじめまして。どうぞよろしく。</div>
+                    <div class="romaji hidden">Hajimemashite. Dōzo yoroshiku.</div>
+                    <div class="sinhala hidden">Hajimemashite — Nice to meet you</div>
+                    <div class="asr-result" id="result-13"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-13"></span></div>
+            </div>
+
+            <div class="sentence" data-index="14">
+                <div class="text">
+                    <div class="jp">お名前は何ですか？</div>
+                    <div class="romaji hidden">O-namae wa nan desu ka?</div>
+                    <div class="sinhala hidden">Oyāge nama mokakda? (ඔයාගේ නම මොකක්ද?)</div>
+                    <div class="asr-result" id="result-14"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-14"></span></div>
+            </div>
+
+            <div class="sentence" data-index="15">
+                <div class="text">
+                    <div class="jp">私はサクラです。</div>
+                    <div class="romaji hidden">Watashi wa Sakura desu.</div>
+                    <div class="sinhala hidden">Mama Sakura (මම සකුරා)</div>
+                    <div class="asr-result" id="result-15"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-15"></span></div>
+            </div>
+        </section>
+
+        <!-- COUNTRY / NATIONALITY -->
+        <section class="card" id="countries">
+            <h2 style="margin-top:0">Country & Nationality</h2>
+
+            <div class="sentence" data-index="20">
+                <div class="text">
+                    <div class="jp">お国はどちらですか？</div>
+                    <div class="romaji hidden">Okuni wa dochira desu ka?</div>
+                    <div class="sinhala hidden">Oyāge rata koheda? (ඔයාගේ රට කොහෙද?)</div>
+                    <div class="asr-result" id="result-20"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-20"></span></div>
+            </div>
+
+            <div class="sentence" data-index="21">
+                <div class="text">
+                    <div class="jp">スリランカです。</div>
+                    <div class="romaji hidden">Suriranka desu.</div>
+                    <div class="sinhala hidden">Sri Lanka desē (ශ්‍රී ලංකා)</div>
+                    <div class="asr-result" id="result-21"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-21"></span></div>
+            </div>
+
+            <div class="sentence" data-index="22">
+                <div class="text">
+                    <div class="jp">スリランカ人です。</div>
+                    <div class="romaji hidden">Suriranka-jin desu.</div>
+                    <div class="sinhala hidden">Sri Lankā janayak (ශ්‍රී ලංකා ජාතිකයෙක්)</div>
+                    <div class="asr-result" id="result-22"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-22"></span></div>
+            </div>
+
+            <div class="sentence" data-index="23">
+                <div class="text">
+                    <div class="jp">私は日本から来ました。</div>
+                    <div class="romaji hidden">Watashi wa Nihon kara kimashita.</div>
+                    <div class="sinhala hidden">Nihon idan āyata (ජපන්ගෙන් ආවා)</div>
+                    <div class="asr-result" id="result-23"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-23"></span></div>
+            </div>
+        </section>
+
+        <!-- NUMBERS & AGE PRACTICE -->
+        <section class="card" id="numbers">
+            <h2 style="margin-top:0">Numbers (Sūji) & Ages</h2>
+
+            <!-- number items as sentences -->
+            <div class="grid">
+                <div class="list-item sentence" data-index="30">
+                    <div class="text">
+                        <div class="jp">一 — </div>
+                        <div class="romaji hidden">ichi</div>
+                        <div class="sinhala hidden">1</div>
+                        <div class="asr-result" id="result-30"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-30"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="31">
+                    <div class="text">
+                        <div class="jp">二 — </div>
+                        <div class="romaji hidden">ni</div>
+                        <div class="sinhala hidden">2</div>
+                        <div class="asr-result" id="result-31"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-31"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="32">
+                    <div class="text">
+                        <div class="jp">三 — </div>
+                        <div class="romaji hidden">san</div>
+                        <div class="sinhala hidden">3</div>
+                        <div class="asr-result" id="result-32"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-32"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="33">
+                    <div class="text">
+                        <div class="jp">四 —  し </div>
+                        <div class="romaji hidden">yon / shi</div>
+                        <div class="sinhala hidden">4</div>
+                        <div class="asr-result" id="result-33"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-33"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="34">
+                    <div class="text">
+                        <div class="jp">五 — </div>
+                        <div class="romaji hidden">go</div>
+                        <div class="sinhala hidden">5</div>
+                        <div class="asr-result" id="result-34"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-34"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="35">
+                    <div class="text">
+                        <div class="jp">十 — </div>
+                        <div class="romaji hidden">jū</div>
+                        <div class="sinhala hidden">10</div>
+                        <div class="asr-result" id="result-35"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-35"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="36">
+                    <div class="text">
+                        <div class="jp">二十 — </div>
+                        <div class="romaji hidden">ni-jū</div>
+                        <div class="sinhala hidden">20</div>
+                        <div class="asr-result" id="result-36"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-36"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="37">
+                    <div class="text">
+                        <div class="jp">百 — </div>
+                        <div class="romaji hidden">hyaku</div>
+                        <div class="sinhala hidden">100</div>
+                        <div class="asr-result" id="result-37"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-37"></span></div>
+                </div>
+            </div>
+
+            <hr style="margin:12px 0">
+
+            <!-- age example sentences -->
+            <div class="sentence" data-index="40">
+                <div class="text">
+                    <div class="jp">私は二十四歳です。</div>
+                    <div class="romaji hidden">Watashi wa nijū yon sai desu.</div>
+                    <div class="sinhala hidden">Mama vayas 24 (මම වයස 24යි)</div>
+                    <div class="asr-result" id="result-40"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-40"></span></div>
+            </div>
+
+            <div class="sentence" data-index="41">
+                <div class="text">
+                    <div class="jp">私は二十一歳です。</div>
+                    <div class="romaji hidden">Watashi wa nijū ichi sai desu.</div>
+                    <div class="sinhala hidden">Mama vayas 21 (මම වයස 21යි)</div>
+                    <div class="asr-result" id="result-41"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-41"></span></div>
+            </div>
+
+            <div class="sentence" data-index="42">
+                <div class="text">
+                    <div class="jp">十一歳です。</div>
+                    <div class="romaji hidden">Jū issai desu.</div>
+                    <div class="sinhala hidden">Pahasu ya (11 වයස)</div>
+                    <div class="asr-result" id="result-42"></div>
+                </div>
+                <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-42"></span></div>
+            </div>
+        </section>
+
+        <!-- OCCUPATIONS — every item becomes interactive -->
+        <section class="card" id="jobs">
+            <h2 style="margin-top:0">Occupations (Vocabulary) — each item has mic & TTS</h2>
+            <p class="small">From PDF: each occupation below can be practiced with TTS and ASR.</p>
+
+            <div class="grid">
+                <div class="list-item sentence" data-index="50">
+                    <div class="text">
+                        <div class="jp">会社員 — </div>
+                        <div class="romaji hidden">(かいしゃいん)Kaishain — company employee</div>
+                        <div class="sinhala hidden">Kaishain (කම්පැනි සේවකයා)</div>
+                        <div class="asr-result" id="result-50"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-50"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="51">
+                    <div class="text">
+                        <div class="jp">銀行員 — </div>
+                        <div class="romaji hidden">(ぎんこういん)Ginkōin — bank employee</div>
+                        <div class="sinhala hidden">Ginkōin (බැංකු සේවකයා)</div>
+                        <div class="asr-result" id="result-51"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-51"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="52">
+                    <div class="text">
+                        <div class="jp">教師 — </div>
+                        <div class="romaji hidden">(きょうし)Kyōshi — teacher</div>
+                        <div class="sinhala hidden">Kyōshi (අධ්‍යාපක)</div>
+                        <div class="asr-result" id="result-52"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-52"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="53">
+                    <div class="text">
+                        <div class="jp">店員 — </div>
+                        <div class="romaji hidden">(てんいん)Tenin — shop assistant</div>
+                        <div class="sinhala hidden">Tenin (කඩ සේවකයා)</div>
+                        <div class="asr-result" id="result-53"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-53"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="54">
+                    <div class="text">
+                        <div class="jp">公務員 — </div>
+                        <div class="romaji hidden">(こうむいん)Kōmuin — civil servant</div>
+                        <div class="sinhala hidden">Kōmuin (පොදු සේවකයා)</div>
+                        <div class="asr-result" id="result-54"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-54"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="55">
+                    <div class="text">
+                        <div class="jp">弁護士 — </div>
+                        <div class="romaji hidden">(べんごし)Bengoshi — lawyer</div>
+                        <div class="sinhala hidden">Bengoshi (වකීලුව)</div>
+                        <div class="asr-result" id="result-55"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-55"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="56">
+                    <div class="text">
+                        <div class="jp">調理師 — </div>
+                        <div class="romaji hidden">(ちょうりし)Chōrishi — cook</div>
+                        <div class="sinhala hidden">Chōrishi (රසකරු)</div>
+                        <div class="asr-result" id="result-56"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-56"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="57">
+                    <div class="text">
+                        <div class="jp">運転手 — </div>
+                        <div class="romaji hidden">(うんてんしゅ)Unten-shu — driver</div>
+                        <div class="sinhala hidden">Unten-shu (රියදුර)</div>
+                        <div class="asr-result" id="result-57"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-57"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="58">
+                    <div class="text">
+                        <div class="jp">歌手 —</div>
+                        <div class="romaji hidden">( かしゅ)Kashu — singer</div>
+                        <div class="sinhala hidden">Kashu (ගායකයා)</div>
+                        <div class="asr-result" id="result-58"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-58"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="59">
+                    <div class="text">
+                        <div class="jp">画家 — </div>
+                        <div class="romaji hidden">(がか) Gaka — painter</div>
+                        <div class="sinhala hidden">Gaka (චිත්‍ර ශිල්පී)</div>
+                        <div class="asr-result" id="result-59"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-59"></span></div>
+                </div>
+
+                <div class="list-item sentence" data-index="60">
+                    <div class="text">
+                        <div class="jp">エンジニア</div>
+                        <div class="romaji hidden">Enginia — engineer</div>
+                        <div class="sinhala hidden">Engineer (ඉංජිනේරුවා)</div>
+                        <div class="asr-result" id="result-60"></div>
+                    </div>
+                    <div class="actions"><button class="play">▶</button><button class="start-asr">Start</button><span class="mic-status" id="mic-60"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUICK EXERCISE -->
         <section class="card exercise" id="exercise">
             <h2 style="margin-top:0">Quick Exercise — Choose correct greeting</h2>
             <p class="small">Situation: 朝に友だちに会ったとき、どの挨拶を送りますか？</p>
@@ -213,9 +490,8 @@
         </section>
 
         <footer>
-            Tip: Click "Start" to begin speech recognition for that phrase. The browser will ask permission to use the
-            microphone. The page compares your recognized phrase to the target and shows basic feedback.
-            SpeechRecognition support varies by browser (Chrome/Edge are best supported).
+            Tip: Click "Start" to begin speech recognition for that phrase. The browser will ask permission to use the microphone.
+            Chrome/Edge on desktop have the most complete SpeechRecognition support. Source: PDF you uploaded. 
         </footer>
     </div>
 
@@ -224,15 +500,10 @@
         function toggleClassAll(selector, cls) {
             document.querySelectorAll(selector).forEach(el => el.classList.toggle(cls));
         }
+        document.getElementById('toggleRomaji').addEventListener('click', function () { toggleClassAll('.romaji', 'hidden'); });
+        document.getElementById('toggleSinhala').addEventListener('click', function () { toggleClassAll('.sinhala', 'hidden'); });
 
-        document.getElementById('toggleRomaji').addEventListener('click', function () {
-            toggleClassAll('.romaji', 'hidden');
-        });
-        document.getElementById('toggleSinhala').addEventListener('click', function () {
-            toggleClassAll('.sinhala', 'hidden');
-        });
-
-        // TTS speak
+        // Text-to-speech (Japanese)
         function speak(text) {
             if (!('speechSynthesis' in window)) { alert('SpeechSynthesis not supported in this browser.'); return; }
             var ut = new SpeechSynthesisUtterance(text);
@@ -245,14 +516,17 @@
             window.speechSynthesis.speak(ut);
         }
 
+        // Wire up play buttons (works for every .sentence)
         document.querySelectorAll('.sentence').forEach(function (node) {
-            node.querySelector('.play').addEventListener('click', function () {
+            var playBtn = node.querySelector('.play');
+            if (!playBtn) return;
+            playBtn.addEventListener('click', function () {
                 var jp = node.querySelector('.jp').textContent.trim();
                 speak(jp);
             });
         });
 
-        // Read all
+        // Read all sentences (collect .jp elements)
         document.getElementById('readAll').addEventListener('click', function () {
             var texts = Array.from(document.querySelectorAll('.sentence .jp')).map(n => n.textContent.trim()).join(' ');
             speak(texts);
@@ -266,7 +540,6 @@
                 document.getElementById('answerText').textContent = '';
             });
         });
-
         document.getElementById('checkAnswer').addEventListener('click', function () {
             var sel = document.querySelector('#choices .choice.selected');
             var out = document.getElementById('answerText');
@@ -279,25 +552,29 @@
         });
 
         // --- Speech Recognition (ASR) setup ---
-        // Use webkitSpeechRecognition where available (Chrome / Edge)
         var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
 
         function normalizeForCompare(s) {
+            // lower-case, strip spaces/punctuation and common long-vowel char — simple normalization
+            if (!s) return '';
             return s.toLowerCase().replace(/[\u3000\s\.,!?\-\"'«»\(\)\[\]_]/g, '').replace(/ー/g, '').replace(/。/g, '').trim();
         }
 
+        // Add ASR handlers to every .sentence that has .start-asr
         document.querySelectorAll('.sentence').forEach(function (node) {
             var startBtn = node.querySelector('.start-asr');
             var resEl = node.querySelector('.asr-result');
             var micEl = node.querySelector('.mic-status');
-            var target = node.querySelector('.jp').textContent.trim();
+            var targetEl = node.querySelector('.jp');
+            if (!startBtn || !resEl || !micEl || !targetEl) return;
+            var target = targetEl.textContent.trim();
 
             startBtn.addEventListener('click', function () {
                 resEl.textContent = '';
                 micEl.textContent = '';
 
                 if (!SpeechRecognition) {
-                    // fallback: ask for mic permission to show user flow
+                    // fallback: request microphone permission so user sees flow, but no ASR
                     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                         navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
                             micEl.textContent = 'Microphone access granted (no ASR). Use Chrome/Edge for recognition.';
@@ -333,13 +610,19 @@
                     var normRec = normalizeForCompare(transcript);
                     var normTarget = normalizeForCompare(target);
 
+                    if (!normRec) {
+                        resEl.innerHTML += ' <span class="asr-wrong">✖ No speech recognized</span>';
+                        speak(target); // hint
+                        return;
+                    }
+
+                    // match heuristics: exact, substring, or reversed substring
                     if (normRec === normTarget || normTarget.indexOf(normRec) !== -1 || normRec.indexOf(normTarget) !== -1) {
                         resEl.innerHTML += ' <span class="asr-correct">✔ Good match</span>';
-                        // optional: praise
                         speak('よくできました。');
                     } else {
                         resEl.innerHTML += ' <span class="asr-wrong">✖ Not exact</span>';
-                        // show hint: play target
+                        // play the correct phrase as hint
                         speak(target);
                     }
                 };
@@ -350,9 +633,6 @@
 
         // Ensure voices loaded for some browsers
         if (speechSynthesis && speechSynthesis.getVoices().length === 0) {
-            speechSynthesis.addEventListener('voiceschanged', function () { });
+            speechSynthesis.addEventListener('voiceschanged', function () {});
         }
     </script>
-</body>
-
-</html>
