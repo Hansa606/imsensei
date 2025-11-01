@@ -178,72 +178,114 @@ footer {
   text-align: center;
 }
 
-/* ===== Responsive - Mobile ===== */
+/* === Ultra Mobile Large UI Fix === */
 @media (max-width: 640px) {
+
   body {
-    padding: 10px;
+    padding: 14px;
     background: #f9fafb;
   }
 
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
   h1 {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+  }
+
+  .controls button {
+    font-size: 1.1rem;
+    padding: 10px 16px;
+    border-radius: 10px;
   }
 
   .card {
     padding: 22px 18px;
     border-radius: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
 
   .card h2 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     border-left: 6px solid var(--accent);
     padding-left: 10px;
+    margin-bottom: 16px;
   }
 
+  /* Sentences */
   .sentence,
   .list-item.sentence {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     text-align: left;
-    padding: 18px;
-    border-radius: 14px;
-    margin-bottom: 14px;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 16px;
     border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
 
   .jp {
-    font-size: 1.6rem;
-    line-height: 1.4;
+    font-size: 1.8rem;   /* Japanese big */
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 6px;
   }
 
-  .romaji, .sinhala {
-    font-size: 1.2rem;
+  .romaji {
+    font-size: 1.3rem;
+    color: #475569;
+  }
+
+  .sinhala {
+    font-size: 1.3rem;
+    color: #374151;
+    margin-top: 6px;
   }
 
   .actions {
     margin-top: 10px;
-    gap: 12px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 14px;
   }
 
   .actions button {
-    padding: 12px 18px;
-    font-size: 1.1rem;
-    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 1.3rem;
+    border-radius: 14px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .actions button::before {
+    font-size: 1.6rem;
+  }
+
+  .start-asr {
+    background: var(--accent);
+    color: white;
   }
 
   .grid {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
   }
 
   footer {
-    font-size: 1rem;
-    margin-top: 30px;
+    font-size: 1.1rem;
+    margin-top: 40px;
   }
 }
+
 </style>
 
 
