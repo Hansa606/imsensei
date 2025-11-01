@@ -265,6 +265,76 @@ footer {
   }
   .jp { font-size: 1.2rem; }
 }
+
+
+/* === Mobile View Fix — All Sentences Vertically === */
+@media (max-width: 640px) {
+  /* keep all sections full width & stacked */
+  section.card {
+    overflow: visible;
+    padding: 16px;
+  }
+
+  /* every sentence full width vertically */
+  .sentence,
+  .list-item.sentence {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    padding: 14px;
+  }
+
+  .text {
+    width: 100%;
+  }
+
+  .jp {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .romaji,
+  .sinhala {
+    font-size: 0.95rem;
+    color: #6b7280;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  .actions button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+
+  /* grid sections (numbers, jobs) become vertical */
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .list-item.sentence .jp {
+    font-size: 1.1rem;
+  }
+}
+
 </style>
 
 
