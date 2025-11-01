@@ -1,255 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<style>
-:root {
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --accent: #2563eb;
-  --accent-light: #e0e7ff;
-  --muted: #6b7280;
-  --danger: #ef4444;
-  --success: #059669;
-  --border: #e5e7eb;
-  --radius: 14px;
-  --shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Iradori Practice — Voice (TTS) + ASR</title>
 
-/* ===== Base ===== */
-body {
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
-  background: var(--bg);
-  color: #0f172a;
-  margin: 0;
-  padding: 24px;
-}
+  <style>
+  :root{
+    --bg:#f8fafc;
+    --card:#fff;
+    --accent:#2563eb;
+    --muted:#6b7280;
+    --radius:12px;
+    --shadow:0 6px 18px rgba(2,6,23,0.06);
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+    margin:0; padding:20px; background:var(--bg); color:#0f172a;
+  }
+  .container{ max-width:1100px; margin:0 auto; }
 
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-}
+  header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap }
+  h1{ font-size:1.15rem; margin:0; font-weight:700 }
 
-/* ===== Header ===== */
-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  gap: 10px;
-}
-
-h1 {
-  font-size: 1.2rem;
-  margin: 0;
-  font-weight: 700;
-}
-
-.controls button {
-  margin-right: 8px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.controls button:hover {
-  background: var(--accent-light);
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
-/* ===== Section Cards ===== */
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-  margin-bottom: 24px;
-}
-.card h2 {
-  margin-top: 0;
-  font-size: 1.2rem;
-  border-left: 5px solid var(--accent);
-  padding-left: 10px;
-  color: #111827;
-}
-
-/* ===== Sentences ===== */
-.sentence {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 14px 0;
-  border-bottom: 1px dashed #e5eaf0;
-}
-
-.text {
-  flex: 1;
-  min-width: 0;
-}
-.jp {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #111827;
-}
-.romaji, .sinhala {
-  font-size: 0.95rem;
-  color: var(--muted);
-  margin-top: 4px;
-}
-
-/* ===== Actions ===== */
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-.actions button {
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.actions button:hover {
-  background: var(--accent-light);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.start-asr {
-  background: var(--accent);
-  color: white;
-  border: none;
-}
-.start-asr:hover {
-  background: #1e40af;
-}
-
-/* ===== Mic / ASR ===== */
-.mic-status {
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-.asr-result {
-  display: block;
-  margin-top: 4px;
-  font-weight: 600;
-}
-.asr-correct { color: var(--success); }
-.asr-wrong { color: var(--danger); }
-
-/* ===== Grid Layout (Numbers / Jobs) ===== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 18px;
-}
-.list-item.sentence {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: #fff;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-  padding: 18px;
-  transition: 0.2s;
-}
-.list-item.sentence:hover {
-  background: #f9fafb;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-.list-item .jp { font-size: 1.3rem; }
-.list-item .romaji, .list-item .sinhala {
-  display: block;
-  font-size: 1rem;
-  margin-top: 4px;
-}
-
-/* ===== Footer ===== */
-footer {
-  font-size: 0.9rem;
-  color: var(--muted);
-  margin-top: 30px;
-  text-align: center;
-}
-/* ===== Adjusted Mobile — slightly smaller (use this to reduce 'too big' feeling) ===== */
-@media (max-width: 640px) {
-  body { padding: 10px; background: #f9fafb; }
-
-  h1 { font-size: 1.25rem; } /* smaller header */
-
-  .card { padding: 16px 12px; border-radius: 12px; margin-bottom: 18px; }
-  .card h2 { font-size: 1.2rem; border-left-width: 4px; padding-left: 8px; }
-
-  .sentence,
-  .list-item.sentence {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    padding: 12px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    border: 1px solid #e6eef8;
+  .controls button{
+    padding:8px 12px; border-radius:10px; border:1px solid #e6eef8; background:#fff; cursor:pointer;
   }
 
-  .jp {
-    font-size: 1.25rem;   /* reduce from 1.8rem to 1.25rem */
-    font-weight: 700;
-    line-height: 1.35;
-    margin-bottom: 6px;
+  .card{
+    background:var(--card); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); margin-bottom:18px;
   }
+  .card h2{ margin:0 0 12px 0; font-size:1rem; padding-left:8px; border-left:4px solid var(--accent); }
 
-  .romaji { font-size: 1rem; }
-  .sinhala { font-size: 1rem; margin-top: 6px; }
-
-  .actions {
-    margin-top: 8px;
-    gap: 10px;
+  /* sentence default (desktop) */
+  .sentence{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 0;
+    border-bottom:1px dashed #eaeff5;
   }
+  .text{ flex:1; min-width:0 }
+  .jp{ font-size:1.05rem; font-weight:600 }
+  .romaji, .sinhala{ color:var(--muted); margin-top:6px; font-size:0.95rem }
 
-  .actions button {
-    padding: 10px;
-    font-size: 1.05rem;
-    border-radius: 10px;
-    width: 48px;
-    height: 48px; /* smaller than 56 */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  .actions{ display:flex; gap:8px; align-items:center; flex-shrink:0; white-space:nowrap }
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center;
+    gap:8px;
+    padding:8px 12px; border-radius:10px; border:1px solid #e6eef8; background:#fff; cursor:pointer;
+    font-size:0.95rem;
   }
+  .btn:active{ transform:translateY(1px) }
+  .btn.play { font-weight:700; }
+  .btn.asr { background:var(--accent); color:#fff; border:none; }
+  .mic-status{ font-size:0.9rem; color:var(--muted); min-width:120px }
 
-  .grid { display: flex; flex-direction: column; gap: 12px; }
+  /* grid items (numbers/jobs) */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px }
+  .list-item.sentence{ display:flex; flex-direction:column; align-items:center; text-align:center; padding:14px; border-radius:10px; border:1px solid #eef4fb; background:#fff }
+  .list-item .jp{ font-size:1.2rem }
+  .list-item .romaji, .list-item .sinhala{ font-size:1rem; color:var(--muted); margin-top:6px }
 
-  footer { font-size: 0.95rem; margin-top: 22px; }
+  footer{ text-align:center; color:var(--muted); margin-top:18px; font-size:0.92rem }
+
+  /* mobile: bigger, touch-friendly, vertical stacking */
+  @media (max-width:640px){
+    body{ padding:12px }
+    h1{ font-size:1.3rem }
+    .card{ padding:18px; border-radius:14px }
+    .card h2{ font-size:1.25rem; border-left-width:6px; padding-left:10px; }
+
+    .sentence, .list-item.sentence{
+      flex-direction:column; align-items:flex-start; text-align:left; padding:16px; border-radius:14px; margin-bottom:12px;
+      border:1px solid #e6eef8; box-shadow:0 2px 8px rgba(2,6,23,0.04)
+    }
+    .jp{ font-size:1.5rem; line-height:1.25 }
+    .romaji, .sinhala{ font-size:1.15rem }
+
+    .actions{ width:100%; margin-top:12px; gap:12px; justify-content:flex-start }
+    .btn{ padding:12px 14px; font-size:1.05rem; border-radius:12px }
+    .btn.icon-only{ width:56px; height:56px; padding:0; }
+    .list-item .jp{ font-size:1.4rem }
+    .grid{ display:flex; flex-direction:column; gap:12px }
+    footer{ font-size:1rem }
+  }
+  .romaji.hidden,
+.sinhala.hidden {
+  display: none !important;
 }
 
-</style>
-
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Iradori Practice — All PDF Items (Mic & ASR)</h1>
-            <div class="controls">
-                <button id="toggleRomaji">Toggle Romaji</button>
-                <button id="toggleSinhala">Toggle Sinhala</button>
-                <button id="readAll">Read all (TTS)</button>
-            </div>
-        </header>
+  <div class="container">
+    <header>
+      <h1>Iradori Practice — Voice (TTS) + ASR</h1>
+      <div class="controls">
+        <button id="toggleRomaji" class="btn">Toggle Romaji</button>
+        <button id="toggleSinhala" class="btn">Toggle Sinhala</button>
+        <button id="readAll" class="btn">🔊 Read all</button>
+      </div>
+    </header>
 
-        <!-- GREETINGS -->
+    <!-- GREETINGS -->
         <section class="card" id="phrases">
             <h2 style="margin-top:0">Greetings</h2>
 
@@ -1150,146 +1002,143 @@ footer {
             Tip: Click "Start" to begin speech recognition for that phrase. The browser will ask permission to use the microphone.
             Chrome/Edge on desktop have the most complete SpeechRecognition support. Source: PDF you uploaded. 
         </footer>
-    </div>
+  </div>
 
-    <script>
-        // Toggle display helpers
-        function toggleClassAll(selector, cls) {
-            document.querySelectorAll(selector).forEach(el => el.classList.toggle(cls));
-        }
-        document.getElementById('toggleRomaji').addEventListener('click', function () { toggleClassAll('.romaji', 'hidden'); });
-        document.getElementById('toggleSinhala').addEventListener('click', function () { toggleClassAll('.sinhala', 'hidden'); });
+  <script>
+  // Basic helpers
+  function el(q, root=document) { return root.querySelector(q) }
+  function els(q, root=document) { return Array.from(root.querySelectorAll(q)) }
 
-        // Text-to-speech (Japanese)
-        function speak(text) {
-            if (!('speechSynthesis' in window)) { alert('SpeechSynthesis not supported in this browser.'); return; }
-            var ut = new SpeechSynthesisUtterance(text);
-            ut.lang = 'ja-JP';
-            var voices = speechSynthesis.getVoices();
-            for (var i = 0; i < voices.length; i++) {
-                if (voices[i].lang.indexOf('ja') === 0) { ut.voice = voices[i]; break; }
+  // Toggle romaji/sinhala
+  function toggleClassAll(selector, cls) {
+    els(selector).forEach(e => e.classList.toggle(cls));
+  }
+  el('#toggleRomaji').addEventListener('click', () => toggleClassAll('.romaji','hidden'));
+  el('#toggleSinhala').addEventListener('click', () => toggleClassAll('.sinhala','hidden'));
+
+  // --- TTS (speechSynthesis) ---
+  function speak(text){
+    if (!('speechSynthesis' in window)) {
+      alert('Speech synthesis not supported in this browser.');
+      return;
+    }
+    // stop previous utterances
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ja-JP';
+    // try pick a Japanese voice if available
+    const voices = window.speechSynthesis.getVoices();
+    for (let i=0;i<voices.length;i++){
+      if (voices[i].lang && voices[i].lang.indexOf('ja') === 0) { u.voice = voices[i]; break; }
+    }
+    window.speechSynthesis.speak(u);
+  }
+
+  // Play single phrase: each .play button speaks its .jp text
+  els('.sentence').forEach(node => {
+    const playBtn = node.querySelector('.play');
+    if (!playBtn) return;
+    playBtn.addEventListener('click', function (e) {
+      // find jp text inside this sentence
+      const jp = (node.querySelector('.jp') || {}).textContent || '';
+      if (jp.trim() === '') return;
+      // user gesture -> safe to call speak on mobile browsers
+      speak(jp.trim());
+    });
+  });
+
+  // Read all button
+  el('#readAll').addEventListener('click', function(){
+    const texts = els('.sentence .jp').map(n => n.textContent.trim()).join('。 ');
+    if (texts) speak(texts);
+  });
+
+  // --- ASR (SpeechRecognition) setup ---
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+  const supportsASR = !!SpeechRecognition;
+
+  // Attach ASR handlers
+  els('.sentence').forEach(node => {
+    const startBtn = node.querySelector('.start-asr');
+    const resEl = node.querySelector('.asr-result');
+    const micEl = node.querySelector('.mic-status');
+    const targetEl = node.querySelector('.jp');
+    if (!startBtn || !resEl || !micEl || !targetEl) return;
+
+    const targetText = targetEl.textContent.trim();
+
+    startBtn.addEventListener('click', async function(){
+      resEl.textContent = '';
+      micEl.textContent = '';
+      // If browser supports Web Speech API
+      if (supportsASR) {
+        try {
+          const recog = new SpeechRecognition();
+          recog.lang = 'ja-JP';
+          recog.interimResults = false;
+          recog.maxAlternatives = 3;
+          recog.onstart = () => micEl.textContent = 'Listening...';
+          recog.onerror = (e) => micEl.textContent = 'Error: ' + (e.error || e.message || 'unknown');
+          recog.onend = () => { if (micEl.textContent === 'Listening...') micEl.textContent = 'Stopped.'; };
+          recog.onresult = (ev) => {
+            let transcript = '';
+            for (let i=0;i<ev.results.length;i++){
+              transcript += ev.results[i][0].transcript + ' ';
             }
-            window.speechSynthesis.cancel();
-            window.speechSynthesis.speak(ut);
-        }
-
-        // Wire up play buttons (works for every .sentence)
-        document.querySelectorAll('.sentence').forEach(function (node) {
-            var playBtn = node.querySelector('.play');
-            if (!playBtn) return;
-            playBtn.addEventListener('click', function () {
-                var jp = node.querySelector('.jp').textContent.trim();
-                speak(jp);
-            });
-        });
-
-        // Read all sentences (collect .jp elements)
-        document.getElementById('readAll').addEventListener('click', function () {
-            var texts = Array.from(document.querySelectorAll('.sentence .jp')).map(n => n.textContent.trim()).join(' ');
-            speak(texts);
-        });
-
-        // Exercise choice selection
-        document.querySelectorAll('#choices .choice').forEach(function (choice) {
-            choice.addEventListener('click', function () {
-                document.querySelectorAll('#choices .choice').forEach(c => c.classList.remove('selected'));
-                choice.classList.add('selected');
-                document.getElementById('answerText').textContent = '';
-            });
-        });
-        document.getElementById('checkAnswer').addEventListener('click', function () {
-            var sel = document.querySelector('#choices .choice.selected');
-            var out = document.getElementById('answerText');
-            if (!sel) { out.textContent = 'Please select a choice.'; return; }
-            if (sel.dataset.value === 'a') {
-                out.textContent = 'Correct — おはよう (Morning greeting).';
+            transcript = transcript.trim();
+            resEl.innerHTML = 'Recognized: <span class="small">'+ transcript +'</span>';
+            // simple normalize
+            const norm = s => (s||'').toLowerCase().replace(/[\u3000\s\.,!?\-\"'«»\(\)\[\]_]/g,'').replace(/ー/g,'').replace(/。/g,'').trim();
+            const nRec = norm(transcript), nTgt = norm(targetText);
+            if (!nRec) { resEl.innerHTML += ' <span class="asr-wrong">✖ No speech</span>'; speak(targetText); return; }
+            if (nRec === nTgt || nTgt.indexOf(nRec) !== -1 || nRec.indexOf(nTgt) !== -1) {
+              resEl.innerHTML += ' <span class="asr-correct">✔ Good match</span>';
+              speak('よくできました。');
             } else {
-                out.textContent = 'Not correct. The best choice is おはよう for morning.';
+              resEl.innerHTML += ' <span class="asr-wrong">✖ Not exact</span>';
+              speak(targetText);
             }
-        });
-
-        // --- Speech Recognition (ASR) setup ---
-        var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
-
-        function normalizeForCompare(s) {
-            // lower-case, strip spaces/punctuation and common long-vowel char — simple normalization
-            if (!s) return '';
-            return s.toLowerCase().replace(/[\u3000\s\.,!?\-\"'«»\(\)\[\]_]/g, '').replace(/ー/g, '').replace(/。/g, '').trim();
+          };
+          // start recognition (user gesture)
+          try { recog.start(); } catch(err) { micEl.textContent = 'Start failed: '+ err.message; }
+        } catch(e){
+          micEl.textContent = 'ASR init error';
         }
+        return;
+      }
 
-        // Add ASR handlers to every .sentence that has .start-asr
-        document.querySelectorAll('.sentence').forEach(function (node) {
-            var startBtn = node.querySelector('.start-asr');
-            var resEl = node.querySelector('.asr-result');
-            var micEl = node.querySelector('.mic-status');
-            var targetEl = node.querySelector('.jp');
-            if (!startBtn || !resEl || !micEl || !targetEl) return;
-            var target = targetEl.textContent.trim();
-
-            startBtn.addEventListener('click', function () {
-                resEl.textContent = '';
-                micEl.textContent = '';
-
-                if (!SpeechRecognition) {
-                    // fallback: request microphone permission so user sees flow, but no ASR
-                    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                        navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
-                            micEl.textContent = 'Microphone access granted (no ASR). Use Chrome/Edge for recognition.';
-                            stream.getTracks().forEach(t => t.stop());
-                        }).catch(function (err) { micEl.textContent = 'Microphone permission denied.'; });
-                    } else {
-                        micEl.textContent = 'SpeechRecognition not supported in this browser.';
-                    }
-                    return;
-                }
-
-                // create recognition instance per start (simple flow)
-                var recog = new SpeechRecognition();
-                recog.lang = 'ja-JP';
-                recog.interimResults = false;
-                recog.maxAlternatives = 3;
-
-                recog.onstart = function () { micEl.textContent = 'Listening...'; };
-                recog.onerror = function (e) { micEl.textContent = 'Error: ' + (e.error || e.message || 'unknown'); };
-                recog.onend = function () { if (micEl.textContent === 'Listening...') micEl.textContent = 'Stopped.'; };
-
-                recog.onresult = function (ev) {
-                    var transcript = '';
-                    for (var i = 0; i < ev.results.length; i++) {
-                        transcript += ev.results[i][0].transcript + ' ';
-                    }
-                    transcript = transcript.trim();
-
-                    // show recognized text
-                    resEl.innerHTML = 'Recognized: <span class="small">' + transcript + '</span>';
-
-                    // compare normalized strings (very simple compare)
-                    var normRec = normalizeForCompare(transcript);
-                    var normTarget = normalizeForCompare(target);
-
-                    if (!normRec) {
-                        resEl.innerHTML += ' <span class="asr-wrong">✖ No speech recognized</span>';
-                        speak(target); // hint
-                        return;
-                    }
-
-                    // match heuristics: exact, substring, or reversed substring
-                    if (normRec === normTarget || normTarget.indexOf(normRec) !== -1 || normRec.indexOf(normTarget) !== -1) {
-                        resEl.innerHTML += ' <span class="asr-correct">✔ Good match</span>';
-                        speak('よくできました。');
-                    } else {
-                        resEl.innerHTML += ' <span class="asr-wrong">✖ Not exact</span>';
-                        // play the correct phrase as hint
-                        speak(target);
-                    }
-                };
-
-                try { recog.start(); } catch (err) { micEl.textContent = 'Recognition start failed: ' + err.message; }
-            });
-        });
-
-        // Ensure voices loaded for some browsers
-        if (speechSynthesis && speechSynthesis.getVoices().length === 0) {
-            speechSynthesis.addEventListener('voiceschanged', function () {});
+      // If ASR not supported: show alert and try simple microphone permission flow
+      const msg = 'SpeechRecognition not supported in this browser. Tap OK to grant microphone permission (no live recognition).';
+      if (confirm(msg)) {
+        // try to request microphone so user can practice (but no recognition)
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            micEl.textContent = 'Microphone access granted (no ASR).';
+            // stop tracks immediately
+            stream.getTracks().forEach(t => t.stop());
+          } catch (err) {
+            micEl.textContent = 'Microphone permission denied.';
+          }
+        } else {
+          micEl.textContent = 'Microphone API not available.';
         }
-    </script>
+      } else {
+        micEl.textContent = 'Mic canceled.';
+      }
+    });
+  });
+
+  // If browser has no ASR, keep mic buttons visible but user will get confirm/alert as above
+  if (!supportsASR) {
+    // optionally add a small note / disable long-press behavior
+    // nothing to do: start-asr click already handles fallback with confirm/getUserMedia
+  }
+
+  // Ensure voices loaded on some browsers
+  if (window.speechSynthesis && window.speechSynthesis.getVoices().length === 0) {
+    window.speechSynthesis.addEventListener('voiceschanged', function(){});
+  }
+  </script>
+</body>
+</html>
