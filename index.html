@@ -211,6 +211,76 @@ footer {
         display: none;
     }
 
+
+    
+.next-page{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+
+
+#nextPage{
+    background: var(--accent);
+    color: white;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+#nextPage:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px) scale(1.05);
+}
+
+#nextPage:active {
+    transform: scale(0.97);
+}
+
+/* Responsive scaling */
+@media (max-width: 1024px) { /* Tablet */
+    #nextPage {
+        padding: 10px 24px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) { /* Large mobile */
+    #nextPage {
+        padding: 8px 20px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) { /* Small mobile */
+    #nextPage {
+        padding: 6px 16px;
+        font-size: 14px;
+    }
+}
+
+#nextPageBtnBottom {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    min-width: 130px;
+}
+
+#nextPageBtnBottom:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+}
     </style>
 </head>
 
@@ -222,6 +292,9 @@ footer {
                 <button id="toggleRomaji">Toggle Romaji</button>
                 <button id="toggleSinhala">Toggle Sinhala</button>
                 <button id="readAll">Read all (TTS)</button>
+                <div class="next-page">
+                 <button id="nextPageBtn">Next Page →</button>
+                </div>
             </div>
         </header>
 
@@ -1112,11 +1185,17 @@ footer {
                 <div class="choice" data-value="c">こんばんは</div>
                 <div class="choice" data-value="d">おやすみ</div>
             </div>
-            <div style="margin-top:10px">
-                <button id="checkAnswer">Check answer</button>
-                <span id="answerText" class="small" style="margin-left:10px"></span>
-            </div>
+        <div style="margin-top: 10px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <button id="checkAnswer">Check answer</button>
+            <button id="nextPageBtnBottom">Next Page</button>
+            <span id="answerText" class="small"
+                style="flex-basis: 100%; text-align: center; margin-top: 8px; font-weight: 500;"></span>
+        </div>
+
+            
         </section>
+
+        
 
         <footer>
             Tip: Click "Start" to begin speech recognition for that phrase. The browser will ask permission to use the
@@ -1126,6 +1205,13 @@ footer {
     </div>
 
     <script>
+
+          document.getElementById("nextPageBtn").addEventListener("click", function () {
+                window.location.href = "mainichi.html"; // redirect to next page
+            });
+
+
+
         // Toggle display helpers
         function toggleClassAll(selector, cls) {
             document.querySelectorAll(selector).forEach(el => el.classList.toggle(cls));
@@ -1265,6 +1351,12 @@ footer {
         if (speechSynthesis && speechSynthesis.getVoices().length === 0) {
             speechSynthesis.addEventListener('voiceschanged', function () { });
         }
+
+
+        // Bottom "Next Page" button (Exercise section)
+            document.getElementById("nextPageBtnBottom").addEventListener("click", function () {
+                window.location.href = "mainichi.html"; // change to your next page
+            });
     </script>
 </body>
 
